@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Login from './components/Login';
+import Releases from './components/Releases';
 
-class App extends React.Component {
-	render() {
-		return (
-			<main></main>
-		)
+const App = () => {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	
+	if (!isLoggedIn) {
+		return <Login setIsLoggedIn={setIsLoggedIn} />;
+	} else {
+		return <Releases />		
 	}
 }
 

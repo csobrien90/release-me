@@ -57,7 +57,12 @@ h4 {
 	font-size: 3em;
 }
 
-p, label {
+p {
+	font-size: 2em;
+}
+
+label {
+	display: block;
 	font-size: 2em;
 }
 
