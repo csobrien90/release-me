@@ -4,11 +4,18 @@ const Login = ( {setIsLoggedIn} ) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
+	const saveToken = (token) => {
+		// Set expiry for three days from now
+		const expiry = Date.now() + (1000 * 60 * 60 * 24 * 3);
+		window.localStorage.setItem('accessToken', JSON.stringify({expiry, token}))
+	}
+
 	const handleLoginAttempt = (e) => {
 		e.preventDefault();
 		console.log(e);
 
-		// setIsLoggedIn(newLoginStatus)
+		saveToken('test');
+		setIsLoggedIn(true);
 	}	
 
 	return (
