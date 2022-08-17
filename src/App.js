@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
+import Release from './components/Release';
 import Releases from './components/Releases';
 
 const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [userId, setUserId] = useState(null);
 	
 	const authenticateToken = () => {
 		const response = {success: false};
@@ -35,6 +38,7 @@ const App = () => {
 		// Send access token to serverless function for authentication
 		let servelessRes = true;
 		if (servelessRes) {
+			setUserId(123);
 			response.success = true;
 			response.message = 'Successfully authenticated!';
 			return response;
@@ -50,11 +54,14 @@ const App = () => {
 		setIsLoggedIn(authCall.success);
 	}, []);
 
-	if (!isLoggedIn) {
-		return <Login setIsLoggedIn={setIsLoggedIn} />;
-	} else {
-		return <Releases isLoggedIn={isLoggedIn} />
-	}
+	return (
+		<Router>
+			<Routes>
+				<Route exact path="/" element={isLoggedIn ? <Releases userId={userId} /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+				<Route path="release/:releaseId" element={<Release authenticateToken={authenticateToken} />} />
+			</Routes>
+		</Router>
+	)
 }
 
 export default App;
