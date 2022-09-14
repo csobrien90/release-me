@@ -1,24 +1,37 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import ReleaseThumbnail from './ReleaseThumbnail';
 
-const Releases = ( {userId} ) => {
+const Releases = ( {userId, token, callApi} ) => {
+	const [data, setData] = useState(null);
 
-	// This component fetches releases by userId
+	useEffect(() => {
 
-	const data = [{
-		"id": 12345,
-		"title": "Release 1",
-		"description" : "This is a description of this media release. It will say things that describe this release."
-	}]
+		const params = {
+			"action": "getAllReleases",
+			"auth": {
+				"userId": userId,
+				"token": token
+			}
+		}
+
+		callApi(params)
+			.then(res => res.json())
+			.then(res => {
+				console.log(res);
+				setData(res.Item.releases);
+				console.log(data);
+			});
+
+	}, []);
 
 	return (
 		<>
 			<h2>Releases</h2>
-			{data && data.map((releaseData, index) => {
+			{data && Object.keys(data).forEach((releaseId) => {
 				return (
-					<Link key={index} to={'/release/'+releaseData.id}>
-						<ReleaseThumbnail data={releaseData} />
+					<Link key={releaseId} to={'/release/'+releaseId}>
+						<ReleaseThumbnail data={data.releaseId} />
 					</Link>
 				)
 			})}

@@ -7,8 +7,9 @@ import Releases from './components/Releases';
 const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [userId, setUserId] = useState(null);
-	
-	const authenticateToken = () => {
+	const [token, setToken] = useState(null);
+
+	const checkToken = () => {
 		const response = {success: false};
 
 		// Get access token from local storage and parse to JSON
@@ -35,30 +36,52 @@ const App = () => {
 			return response;
 		}
 
-		// Send access token to serverless function for authentication
-		let servelessRes = true;
-		if (servelessRes) {
-			setUserId(123);
-			response.success = true;
-			response.message = 'Successfully authenticated!';
-			return response;
-		} else {
-			response.message = 'Authentication failed!';
+		// Update state of userId and token
+		if (!access.userId) {
+			response.message = 'Ineligble access token: missing userId';
 			return response;
 		}
+
+		if (!access.token) {
+			response.message = 'Ineligble access token: missing token';
+			return response;
+		}
+		
+		setUserId(access.userId);
+		setToken(access.token);
+		response.success = true;
+		return response;
+
+	}
+
+	const callApi = async (params) => {
+		const apiEndpoint = 'https://824oc9yvf6.execute-api.us-east-2.amazonaws.com/prod/releaseme';
+		
+		const response = await fetch(apiEndpoint, {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify(params)
+		});
+		
+		return response;
 	}
 
 	useEffect(() => {
-		const authCall = authenticateToken();
-		console.log(authCall.message);
+		const authCall = checkToken();
 		setIsLoggedIn(authCall.success);
 	}, []);
 
 	return (
 		<Router>
 			<Routes>
-				<Route exact path="/" element={isLoggedIn ? <Releases userId={userId} /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-				<Route path="release/:releaseId" element={<Release authenticateToken={authenticateToken} />} />
+				<Route exact path="/" element={
+					isLoggedIn ? 
+						<Releases userId={userId} token={token} callApi={callApi} /> : 
+						<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} />
+				} />
+				<Route path="release/:releaseId" element={
+					<Release userId={userId} token={token} checkToken={checkToken} callApi={callApi} />
+				} />
 			</Routes>
 		</Router>
 	)

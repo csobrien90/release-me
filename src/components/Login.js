@@ -4,18 +4,23 @@ const Login = ( {setIsLoggedIn} ) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
-	const saveToken = (token) => {
+	const saveToken = (token, userId) => {
 		// Set expiry for three days from now
 		const expiry = Date.now() + (1000 * 60 * 60 * 24 * 3);
-		window.localStorage.setItem('accessToken', JSON.stringify({expiry, token}))
+		window.localStorage.setItem('accessToken', JSON.stringify({userId, expiry, token}))
 	}
 
 	const handleLoginAttempt = (e) => {
 		e.preventDefault();
-		console.log(e);
 
-		saveToken('test');
+		// Get reCaptcha code
+		// Call Lambda to validate login information 
+
+		// If successful login, save token and log user in
+		saveToken(12345, 1);
 		setIsLoggedIn(true);
+
+		// If failed login, alert user of invalid credentials
 	}	
 
 	return (
