@@ -54,6 +54,22 @@ const App = () => {
 
 	}
 
+	const checkReleaseData = () => {
+		// Get saved data from sessionStorage
+		let sessionData = sessionStorage.getItem('releases');
+		let parsedData = null;
+
+		try {
+			parsedData = JSON.parse(sessionData);
+		} catch (error) {
+			console.error(error);
+		}
+
+		// Validate data
+
+		return parsedData;
+	}
+
 	const callApi = async (params) => {
 		const apiEndpoint = 'https://824oc9yvf6.execute-api.us-east-2.amazonaws.com/prod/releaseme';
 		
@@ -76,11 +92,11 @@ const App = () => {
 			<Routes>
 				<Route exact path="/" element={
 					isLoggedIn ? 
-						<Releases userId={userId} token={token} callApi={callApi} /> : 
+						<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} /> : 
 						<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} />
 				} />
 				<Route path="release/:releaseId" element={
-					<Release userId={userId} token={token} checkToken={checkToken} callApi={callApi} />
+					<Release userId={userId} token={token} checkToken={checkToken} callApi={callApi} checkReleaseData={checkReleaseData} />
 				} />
 			</Routes>
 		</Router>

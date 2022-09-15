@@ -2,24 +2,32 @@ import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import ReleaseThumbnail from './ReleaseThumbnail';
 
-const Releases = ( {userId, token, callApi} ) => {
+const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
 
-		const params = {
-			"action": "getAllReleases",
-			"auth": {
-				"userId": userId,
-				"token": token
+		const releaseData = checkReleaseData();
+		
+		if (releaseData) { 
+			setData(releaseData);
+			return;
+		} else {
+			const params = {
+				"action": "getAllReleases",
+				"auth": {
+					"userId": userId,
+					"token": token
+				}
 			}
+	
+			callApi(params)
+				.then(res => res.json())
+				.then(res => {
+					sessionStorage.setItem('releases', JSON.stringify(res.Item.releases));
+					setData(res.Item.releases);
+				});
 		}
-
-		callApi(params)
-			.then(res => res.json())
-			.then(res => {
-				setData(res.Item.releases);
-			});
 
 	}, []);
 
