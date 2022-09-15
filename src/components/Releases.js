@@ -18,9 +18,7 @@ const Releases = ( {userId, token, callApi} ) => {
 		callApi(params)
 			.then(res => res.json())
 			.then(res => {
-				console.log(res);
 				setData(res.Item.releases);
-				console.log(data);
 			});
 
 	}, []);
@@ -28,10 +26,10 @@ const Releases = ( {userId, token, callApi} ) => {
 	return (
 		<>
 			<h2>Releases</h2>
-			{data && Object.keys(data).forEach((releaseId) => {
+			{data && Object.keys(data).map(releaseId => {
 				return (
-					<Link key={releaseId} to={'/release/'+releaseId}>
-						<ReleaseThumbnail data={data.releaseId} />
+					<Link key={releaseId} to={`/release/${releaseId}`}>
+						<ReleaseThumbnail data={data[releaseId]} />
 					</Link>
 				)
 			})}

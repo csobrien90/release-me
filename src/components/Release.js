@@ -1,14 +1,52 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom'
 
-const Release = () => {
+const Release = ({ callApi }) => {
 	const { releaseId } = useParams();
+	const [data, setData] = useState(null);
+
+	useEffect(() => {
+
+		// Get access token from local storage and parse to JSON
+		let response = {success: false};
+		let access = window.localStorage.getItem('accessToken');
+
+		if (access === null) {
+			response.message = 'No access token found in local storage';
+			console.log(response);
+		} else {
+			try {
+				access = JSON.parse(access);
+			} catch {
+				response.message = 'Ineligble access token: improper format';
+				console.log(response);
+			}
+		}
+
+		const params = {
+			"action": "getAllReleases",
+			"auth": {
+				"userId": access.userId,
+				"token": access.token
+			}
+		}
+
+		callApi(params)
+			.then(res => res.json())
+			.then(res => {
+				setData(res.Item.releases[releaseId]);
+			});
+
+	}, []);
+
 
 	// This component fetches full release data by releaseId
 
+
 	return (
 		<>
-			<h2>Release # {releaseId}</h2>
+			<h2>{data && data.title}</h2>
+			<p>{data && data.description}</p>
 		</>
 	)
 }
