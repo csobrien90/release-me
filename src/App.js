@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
+import GravatarLogin from './components/GravatarLogin';
 import Release from './components/Release';
 import Releases from './components/Releases';
 import CreateRelease from './components/CreateRelease';
@@ -11,6 +12,7 @@ const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [token, setToken] = useState(null);
+	const [userName, setUserName] = useState('');
 
 	const checkToken = () => {
 		const response = {success: false};
@@ -49,9 +51,16 @@ const App = () => {
 			response.message = 'Ineligble access token: missing token';
 			return response;
 		}
+
+		if (!access.userName) {
+			response.message = 'Ineligble access userName: missing userName';
+			return response;
+		}
 		
 		setUserId(access.userId);
 		setToken(access.token);
+		setUserName(access.userName);
+
 		response.success = true;
 		return response;
 
@@ -98,12 +107,13 @@ const App = () => {
 
 	return (
 		<>
+			{isLoggedIn && <GravatarLogin userName={userName} />}
 			<Router>
 				<Routes>
 					<Route exact path="/" element={
 						isLoggedIn ? 
 							<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} /> : 
-							<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} />
+							<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} setUserName={setUserName} />
 					} />
 					<Route path="release/:releaseId" element={
 						<Release callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} />

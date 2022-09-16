@@ -5,6 +5,19 @@ import ReleaseThumbnail from './ReleaseThumbnail';
 const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 	const [data, setData] = useState(null);
 
+	const getAccessToken = () => {
+		// Get access token from local storage and parse to JSON
+		let access = window.localStorage.getItem('accessToken');
+
+		try {
+			access = JSON.parse(access);
+		} catch {
+			access = false;
+		}
+
+		return access;
+	}
+	
 	useEffect(() => {
 
 		const releaseData = checkReleaseData();
@@ -13,11 +26,14 @@ const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 			setData(releaseData);
 			return;
 		} else {
+			let access = getAccessToken();
+			if ( !access ) return;
+
 			const params = {
 				"action": "getAllReleases",
 				"auth": {
-					"userId": userId,
-					"token": token
+					"userId": access.userId,
+					"token": access.token
 				}
 			}
 	
