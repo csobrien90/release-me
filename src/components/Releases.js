@@ -34,6 +34,7 @@ const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 	return (
 		<>
 			<h2>All Releases</h2>
+			<Link to={'/create'}><button>Create New Release</button></Link>
 			{data && Object.keys(data).map(releaseId => {
 				return (
 					<Link key={releaseId} to={`/release/${releaseId}`}>

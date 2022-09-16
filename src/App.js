@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Release from './components/Release';
 import Releases from './components/Releases';
+import CreateRelease from './components/CreateRelease';
 import Footer from './components/Footer';
 
 const App = () => {
@@ -104,7 +105,10 @@ const App = () => {
 							<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} />
 					} />
 					<Route path="release/:releaseId" element={
-						<Release userId={userId} token={token} checkToken={checkToken} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} />
+						<Release callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} />
+					} />
+					<Route path="create" element={
+						<CreateRelease callApi={callApi} />
 					} />
 				</Routes>
 			</Router>
