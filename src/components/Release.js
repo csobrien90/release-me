@@ -32,7 +32,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 				});
 		}
 
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const getAccessToken = () => {
 		// Get access token from local storage and parse to JSON
@@ -80,7 +80,28 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 				<button className='btn-delete' onClick={deleteRelease}>Delete Release</button>
 				<p className='meta-times'>Created: {data && convertTimestamp(data.created)} | Last Modified: {data && convertTimestamp(data.modified)}</p>
 			</header>
-			<p>{data && data.description}</p>
+			<section>
+				<h3>Description</h3>
+				<p>{data && data.description}</p>
+				<h3>Sender info</h3>
+				<ul>
+					<li>{data && "Name: " + data.senderInfo.name}</li>
+					<li>{data && "Email: " + data.senderInfo.emailAddress}</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Signature Request(s)</h3>
+				<Link to={`/request-signatures/${releaseId}`}><button>Request New Signature(s)</button></Link>
+
+				{
+					// data && data.requestedSignatures.map((request, index) => {
+					// 	return (
+					// 		<article key={index}>
+					// 		</article>
+					// 	);
+					// })
+				}
+			</section>
 		</>
 	)
 }

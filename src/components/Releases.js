@@ -29,7 +29,7 @@ const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 				});
 		}
 
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>

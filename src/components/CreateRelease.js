@@ -35,7 +35,7 @@ const CreateRelease = ({ callApi }) => {
 				"description": description,
 				"senderInfo": {
 					"name": senderName,
-					"email": senderEmail
+					"emailAddress": senderEmail
 				}
 			}
 		}
@@ -66,11 +66,11 @@ const CreateRelease = ({ callApi }) => {
 					<h3>Sender Info</h3>
 					<p>
 						This info will be used to identify you in:
-						<ul>
-							<li>signature request emails</li>
-							<li>media release contract</li>
-						</ul>
 					</p>
+					<ul>
+						<li>signature request emails</li>
+						<li>media release contract</li>
+					</ul>
 					<label htmlFor='sender-name'>Name:</label>
 					<input type='text' id='sender-name' name='sender-name' value={senderName} onChange={(e) => setSenderName(e.target.value)} required />
 					<label htmlFor='sender-email'>Email:</label>

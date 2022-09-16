@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Release from './components/Release';
 import Releases from './components/Releases';
 import CreateRelease from './components/CreateRelease';
+import RequestSignatures from './components/RequestSignatures';
 import Footer from './components/Footer';
 
 const App = () => {
@@ -109,6 +110,9 @@ const App = () => {
 					} />
 					<Route path="create" element={
 						<CreateRelease callApi={callApi} />
+					} />
+					<Route path="request-signatures/:releaseId" element={
+						<RequestSignatures callApi={callApi} />
 					} />
 				</Routes>
 			</Router>
