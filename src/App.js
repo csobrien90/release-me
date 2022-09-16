@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Release from './components/Release';
 import Releases from './components/Releases';
+import Footer from './components/Footer';
 
 const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -82,24 +83,33 @@ const App = () => {
 		return response;
 	}
 
+	const convertTimestamp = (timestamp) => {
+		const date = new Date(timestamp);
+		const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+		return date.toLocaleString(undefined, options);
+	}
+
 	useEffect(() => {
 		const authCall = checkToken();
 		setIsLoggedIn(authCall.success);
 	}, []);
 
 	return (
-		<Router>
-			<Routes>
-				<Route exact path="/" element={
-					isLoggedIn ? 
-						<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} /> : 
-						<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} />
-				} />
-				<Route path="release/:releaseId" element={
-					<Release userId={userId} token={token} checkToken={checkToken} callApi={callApi} checkReleaseData={checkReleaseData} />
-				} />
-			</Routes>
-		</Router>
+		<>
+			<Router>
+				<Routes>
+					<Route exact path="/" element={
+						isLoggedIn ? 
+							<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} /> : 
+							<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} />
+					} />
+					<Route path="release/:releaseId" element={
+						<Release userId={userId} token={token} checkToken={checkToken} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} />
+					} />
+				</Routes>
+			</Router>
+			<Footer />
+		</>
 	)
 }
 

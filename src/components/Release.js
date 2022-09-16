@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 
-const Release = ({ callApi, checkReleaseData }) => {
+const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 	const { releaseId } = useParams();
 	const [data, setData] = useState(null);
 
@@ -14,21 +14,8 @@ const Release = ({ callApi, checkReleaseData }) => {
 			return;
 		} else {
 
-			// Get access token from local storage and parse to JSON
-			let response = {success: false};
-			let access = window.localStorage.getItem('accessToken');
-
-			if (access === null) {
-				response.message = 'No access token found in local storage';
-				console.log(response);
-			} else {
-				try {
-					access = JSON.parse(access);
-				} catch {
-					response.message = 'Ineligble access token: improper format';
-					console.log(response);
-				}
-			}
+			let access = getAccessToken();
+			if ( !access ) return;
 
 			const params = {
 				"action": "getAllReleases",
@@ -47,13 +34,52 @@ const Release = ({ callApi, checkReleaseData }) => {
 
 	}, []);
 
+	const getAccessToken = () => {
+		// Get access token from local storage and parse to JSON
+		let access = window.localStorage.getItem('accessToken');
 
-	// This component fetches full release data by releaseId
+		try {
+			access = JSON.parse(access);
+		} catch {
+			access = false;
+		}
 
+		return access;
+	}
+
+	const deleteRelease = () => {
+		let access = getAccessToken();
+		if ( !access ) return;
+
+		const params = {
+			"action": "deleteRelease",
+			"auth": {
+				"userId": access.userId,
+				"token": access.token
+			},
+			"params": {
+				"releaseId": releaseId
+			}
+		}
+
+		callApi(params)
+			.then(res => {
+				if (res.status !== 200) return;
+				sessionStorage.removeItem("releases");
+				nav('/');
+			});
+	}
+
+	const nav = useNavigate();
 
 	return (
 		<>
-			<h2>{data && data.title}</h2>
+			<header>
+				<Link to={'/'}>Back to All Releases</Link>
+				<h2>{data && data.title}</h2>
+				<button className='btn-delete' onClick={deleteRelease}>Delete Release</button>
+				<p className='meta-times'>Created: {data && convertTimestamp(data.created)} | Last Modified: {data && convertTimestamp(data.modified)}</p>
+			</header>
 			<p>{data && data.description}</p>
 		</>
 	)

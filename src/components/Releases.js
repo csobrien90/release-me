@@ -33,7 +33,7 @@ const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 
 	return (
 		<>
-			<h2>Releases</h2>
+			<h2>All Releases</h2>
 			{data && Object.keys(data).map(releaseId => {
 				return (
 					<Link key={releaseId} to={`/release/${releaseId}`}>
