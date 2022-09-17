@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import SignatureRequestThumbnail from './SignatureRequestThumbnail';
 
 const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 	const { releaseId } = useParams();
@@ -94,12 +95,11 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 				<Link to={`/request-signatures/${releaseId}`}><button>Request New Signature(s)</button></Link>
 
 				{
-					// data && data.requestedSignatures.map((request, index) => {
-					// 	return (
-					// 		<article key={index}>
-					// 		</article>
-					// 	);
-					// })
+					data && data.requestedSignatures.map((request, index) => {
+						return (
+							<SignatureRequestThumbnail key={index} data={request} convertTimestamp={convertTimestamp} />
+						);
+					})
 				}
 			</section>
 		</>

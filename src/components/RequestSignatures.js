@@ -1,10 +1,28 @@
 import React, {useState} from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'
 
-const RequestSignatures = ({ callApi }) => {
+const RequestSignatures = ({ callApi, checkReleaseData }) => {
 	const {releaseId} = useParams();
 	const [subject, setSubject] = useState('');
 	const [message, setMessage] = useState('');
+	const [signers, setSigners] = useState([{name: '', emailAddress:''}])
+
+	const validateSignerInfo = (signerInfo) => {
+		let isObject = typeof signerInfo === 'object';
+		let hasTwoProps = Object.keys(signerInfo).length === 2;
+		let hasValidEmail = signerInfo.hasOwnProperty('emailAddress') && /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(signerInfo.emailAddress);
+		let hasValidName = signerInfo.hasOwnProperty('name') && /^[a-zA-Z0-9.' ]{1,}$/.test(signerInfo.name);
+		let isValid = isObject && hasTwoProps && hasValidEmail && hasValidName;
+		console.log(signerInfo, 'is ', JSON.stringify(isValid))
+		return isValid;
+	}
+
+	const addSigner = (event) => {
+		event.preventDefault();
+		const tempSigners = [...signers];
+		tempSigners.push({name: '', emailAddress: ''});
+		setSigners(tempSigners);
+	}
 
 	const getAccessToken = () => {
 		// Get access token from local storage and parse to JSON
@@ -18,10 +36,14 @@ const RequestSignatures = ({ callApi }) => {
 
 		return access;
 	}
-
+	
 	const requestSignature = () => {
 		let access = getAccessToken();
 		if ( !access ) return;
+
+		const releases = checkReleaseData();
+		const tempSigners = [...signers];
+		const requestSigners = tempSigners.filter(validateSignerInfo);
 
 		const params = {
 			"action": "signatureRequest",
@@ -31,16 +53,10 @@ const RequestSignatures = ({ callApi }) => {
 			},
 			"params": {
 				"releaseId": releaseId,
-				"senderInfo": {
-					"name": "Company ABC",
-					"emailAddress": "company@abc.com"
-				},
+				"senderInfo": releases[releaseId].senderInfo,
 				"subject": subject,
 				"message": message,
-				"signerInfo": [{
-					"name": "Chad O'Brien",
-					"emailAddress": "obrien.music@gmail.com"
-				}]
+				"signerInfo": requestSigners
 			}
 		}
 
@@ -68,10 +84,25 @@ const RequestSignatures = ({ callApi }) => {
 				</section>
 				<section>
 					<h3>Signer Info</h3>
-					{/* <label htmlFor='sender-name'>Name:</label>
-					<input type='text' id='sender-name' name='sender-name' value={senderName} onChange={(e) => setSenderName(e.target.value)} required />
-					<label htmlFor='sender-email'>Email:</label>
-					<input type='email' id='sender-email' name='sender-email' value={senderEmail} onChange={(e) => setSenderEmail(e.target.value)} required /> */}
+					{signers && signers.map((signer, index) => {
+						return (
+							<div key={index} className="signer-info-row">
+								<label htmlFor={'signer-name-'+index}>Name:</label>
+								<input type='text' id={'signer-name-'+index} name={'signer-name-'+index} value={signer.name} onChange={(e) => {
+									const tempSigners = [...signers];
+									tempSigners[index].name = e.target.value;
+									setSigners(tempSigners);
+								}} required />
+								<label htmlFor={'signer-email-'+index}>Email:</label>
+								<input type='email' id={'signer-email-'+index} name={'signer-email-'+index} value={signer.emailAddress} onChange={(e) => {
+									const tempSigners = [...signers];
+									tempSigners[index].emailAddress = e.target.value;
+									setSigners(tempSigners);
+								}} required />
+							</div>
+						)
+					})}
+					<button onClick={(e) => addSigner(e)}>Add Signer</button>
 				</section>
 				<button onClick={(e) => {e.preventDefault(); requestSignature()}}>Create Release</button>
 			</form>

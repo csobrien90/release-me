@@ -122,7 +122,7 @@ const App = () => {
 						<CreateRelease callApi={callApi} />
 					} />
 					<Route path="request-signatures/:releaseId" element={
-						<RequestSignatures callApi={callApi} />
+						<RequestSignatures callApi={callApi} checkReleaseData={checkReleaseData} />
 					} />
 				</Routes>
 			</Router>
