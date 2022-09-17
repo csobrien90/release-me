@@ -60,7 +60,7 @@ const CreateRelease = ({ callApi }) => {
 					<label htmlFor='title'>Title:</label>
 					<input type='text' id='title' name='title' value={title} onChange={(e) => setTitle(e.target.value)} required />
 					<label htmlFor='description'>Description:</label>
-					<input type='text' id='description' name='description' value={description} onChange={(e) => setDescription(e.target.value)} required />
+					<textarea id='description' name='description' value={description} onChange={(e) => setDescription(e.target.value)} required />
 				</section>
 				<section>
 					<h3>Sender Info</h3>
