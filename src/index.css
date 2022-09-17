@@ -41,6 +41,11 @@ body {
 	font-size: 10px;
 }
 
+main {
+	padding: 1rem;
+	display: grid;
+}
+
 h1 {
 	font-size: 10em;
 }
@@ -70,12 +75,6 @@ ul {
 	list-style-type: none;
 }
 
-/* 
-main {}
-
-section {}
-*/
-
 .sr-only {
 	border: 0 !important;
 	clip: rect(1px, 1px, 1px, 1px) !important;
@@ -98,11 +97,33 @@ section {}
 
 /*
 __________________
-Navigation
+Shared styles
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 */
 
+#logout-wrapper {
+	display: grid;
+	background-color: white;
+}
 
+#logout {
+	justify-self: flex-end;
+	position: relative;
+	width: fit-content;
+	padding: .5rem 0;
+}
+#logout button {
+	position: absolute;
+	width: 100%;
+	top: 1rem;
+	left: 0;
+	transition: all .2s;
+	z-index: -1;
+}
+#logout button.isExpanded {
+	top: 3rem;
+	z-index: 0;
+}
 
 
 /*
