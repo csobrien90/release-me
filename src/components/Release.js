@@ -75,13 +75,13 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 
 	return (
 		<>
-			<header>
+			<header id='release-header'>
 				<Link to={'/'} className="back-link">Back to All Releases</Link>
 				<h2>{data && data.title}</h2>
 				<button className='btn-delete' onClick={deleteRelease}>Delete Release</button>
-				<p className='meta-times'>Created: {data && convertTimestamp(data.created)} | Last Modified: {data && convertTimestamp(data.modified)}</p>
+				<p className='metadata'>Created: {data && convertTimestamp(data.created)} <br></br>Last Modified: {data && convertTimestamp(data.modified)}</p>
 			</header>
-			<section>
+			<section id='release-general-info'>
 				<h3>Description</h3>
 				<p>{data && data.description}</p>
 				<h3>Sender info</h3>
@@ -90,16 +90,16 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 					<li>{data && "Email: " + data.senderInfo.emailAddress}</li>
 				</ul>
 			</section>
-			<section>
-				<h3>Signature Request(s)</h3>
+			<section id='release-signatures'>
+				<h3>Signatures</h3>
 				<Link to={`/request-signatures/${releaseId}`}><button>Request New Signature(s)</button></Link>
-
 				{
-					data && data.requestedSignatures.map((request, index) => {
+					data && data.requestedSignatures.length > 0 ? data.requestedSignatures.map((request, index) => {
 						return (
 							<SignatureRequestThumbnail key={index} data={request} convertTimestamp={convertTimestamp} />
 						);
-					})
+					}) : <p id='no-signatures'>No signatures requested yet.</p>
+
 				}
 			</section>
 		</>

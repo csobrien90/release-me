@@ -74,7 +74,7 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 		<>
 			<Link to={`/release/${releaseId}`} className="back-link">Cancel signature request</Link>
 			<h2>Request New Signature(s)</h2>
-			<form>
+			<form id='request-new-signature'>
 				<section>
 					<h3>General Info</h3>
 					<label htmlFor='subject'>Subject:</label>
@@ -87,18 +87,22 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 					{signers && signers.map((signer, index) => {
 						return (
 							<div key={index} className="signer-info-row">
-								<label htmlFor={'signer-name-'+index}>Name:</label>
-								<input type='text' id={'signer-name-'+index} name={'signer-name-'+index} value={signer.name} onChange={(e) => {
-									const tempSigners = [...signers];
-									tempSigners[index].name = e.target.value;
-									setSigners(tempSigners);
-								}} required />
-								<label htmlFor={'signer-email-'+index}>Email:</label>
-								<input type='email' id={'signer-email-'+index} name={'signer-email-'+index} value={signer.emailAddress} onChange={(e) => {
-									const tempSigners = [...signers];
-									tempSigners[index].emailAddress = e.target.value;
-									setSigners(tempSigners);
-								}} required />
+								<div className='input-wrapper'>
+									<label htmlFor={'signer-name-'+index}>Name:</label>
+									<input type='text' id={'signer-name-'+index} name={'signer-name-'+index} value={signer.name} onChange={(e) => {
+										const tempSigners = [...signers];
+										tempSigners[index].name = e.target.value;
+										setSigners(tempSigners);
+									}} required />
+								</div>
+								<div className='input-wrapper'>
+									<label htmlFor={'signer-email-'+index}>Email:</label>
+									<input type='email' id={'signer-email-'+index} name={'signer-email-'+index} value={signer.emailAddress} onChange={(e) => {
+										const tempSigners = [...signers];
+										tempSigners[index].emailAddress = e.target.value;
+										setSigners(tempSigners);
+									}} required />
+								</div>
 							</div>
 						)
 					})}

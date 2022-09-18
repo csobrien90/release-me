@@ -21,31 +21,35 @@ const SignatureRequestThumbnail = ( {data, convertTimestamp} ) => {
 
 	return (
 		<article>
-			<h4>Request Info</h4>
-			<p>Created: {convertTimestamp(data.createdAt * 1000)}</p>
+			<header>
+				<h4>Request Info</h4>
+				<p className='metadata'>Created: {convertTimestamp(data.createdAt * 1000)}</p>
+			</header>
 			<ul>
 				<li>Subject: {data && data.subject}</li>
 				<li>Message: {data && data.message}</li>
 			</ul>
-			<h5>Signature Requests ({data && data.signatures.length})</h5>
-			<dl>
-				{signatures.pending.length > 0 && signatures.pending.map((sig, index) => {
-					return (
-						<React.Fragment key={index}>
-							<dt>Pending:</dt>
-							<dd>{sig.signerName}</dd>
-						</React.Fragment>
-					)
-				})}
-				{signatures.signed.length > 0 && signatures.signed.map((sig, index) => {
-					return (
-						<React.Fragment key={index}>
-							<dt>Signed:</dt>
-							<dd>{sig.signerName}</dd>
-						</React.Fragment>
-					)
-				})}
-			</dl>
+			<div className='signature-request'>
+				<h4>Signature Requests</h4>
+				<dl>
+					{signatures.pending.length > 0 && signatures.pending.map((sig, index) => {
+						return (
+							<React.Fragment key={index}>
+								<dt>Pending ({data && signatures.pending.length})</dt>
+								<dd>{sig.signerName}</dd>
+							</React.Fragment>
+						)
+					})}
+					{signatures.signed.length > 0 && signatures.signed.map((sig, index) => {
+						return (
+							<React.Fragment key={index}>
+								<dt>Signed ({data && signatures.signed.length})</dt>
+								<dd>{sig.signerName}</dd>
+							</React.Fragment>
+						)
+					})}
+				</dl>
+			</div>
 		</article>
 	)
 }

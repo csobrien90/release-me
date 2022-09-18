@@ -46,6 +46,7 @@ main {
 	align-items: flex-start;
 	position: relative;
 	min-height: 100vh;
+	padding-bottom: 3rem;
 }
 
 h1 {
@@ -65,8 +66,17 @@ h4 {
 	font-size: 2em;
 }
 
-p, li {
+dt {
+	font-size: 1.8em;
+	margin-bottom: .2rem;
+}
+
+p, li, dd {
 	font-size: 1.6em;
+}
+
+dd {
+	margin-left: 1rem;
 }
 
 label {
@@ -175,6 +185,10 @@ All Releases
 	padding: 1rem;
 }
 
+.metadata {
+	font-size: .8rem;
+}
+
 /*
 __________________
 Create a Release
@@ -206,6 +220,105 @@ Create a Release
 	margin-bottom: 1rem;
 }
 
+/*
+__________________
+Single Release
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+*/
+
+#release-header {
+	display: grid;
+	grid-template-columns: auto auto;
+	margin-bottom: 3rem;
+}
+
+#release-header .back-link {
+	grid-column: span 2;
+}
+
+#release-general-info h3 {
+	margin-top: 1rem;
+}
+
+#release-general-info p, #release-general-info ul  {
+	margin-bottom: .5rem;
+}
+
+#release-signatures {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 3rem;
+}
+
+#release-signatures h3 {
+	margin: 0;
+}
+
+#release-signatures article {
+	display: grid;
+	gap: 1rem;
+	padding: 1rem;
+	grid-column: span 2;
+	border: 1px solid black;
+}
+
+#release-signatures article ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+#release-signatures .signature-request {
+	display: grid;
+	gap: .5rem;
+}
+
+#no-signatures {
+	grid-column: span 2;
+}
+
+/*
+__________________
+Request Signatures
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+*/
+
+#request-new-signature section {
+	display: grid;
+	padding: 1rem 0;
+}
+
+#request-new-signature h3 {
+	margin-bottom: 1rem;
+}
+
+#request-new-signature .signer-info-row {
+	display: grid;
+	margin: 1rem 0;
+}
+
+#request-new-signature .input-wrapper {
+	display: grid;
+	max-width: 300px;
+}
+
+#request-new-signature label {
+	margin-bottom: .2rem;
+}
+
+#request-new-signature input {
+	margin-bottom: 1rem;
+}
+
+#request-new-signature textarea {
+	height: 10rem;
+}
+
+#request-new-signature button {
+	width: fit-content;
+}
 
 
 /*
