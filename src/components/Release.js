@@ -76,7 +76,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 	return (
 		<>
 			<header>
-				<Link to={'/'}>Back to All Releases</Link>
+				<Link to={'/'} className="back-link">Back to All Releases</Link>
 				<h2>{data && data.title}</h2>
 				<button className='btn-delete' onClick={deleteRelease}>Delete Release</button>
 				<p className='meta-times'>Created: {data && convertTimestamp(data.created)} | Last Modified: {data && convertTimestamp(data.modified)}</p>

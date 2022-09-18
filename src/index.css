@@ -58,23 +58,20 @@ h2 {
 
 h3 {
 	font-size: 3em;
+	margin-bottom: .5rem;
 }
 
 h4 {
 	font-size: 2em;
 }
 
-p {
+p, li {
 	font-size: 1.6em;
 }
 
 label {
 	display: block;
 	font-size: 1.6em;
-}
-
-ul {
-	list-style-type: none;
 }
 
 .sr-only {
@@ -131,6 +128,20 @@ Shared styles
 	opacity: 1;
 }
 
+.back-link {
+	font-size: .9rem;
+	text-decoration: none;
+}
+
+.back-link:hover, .back-link:focus {
+	font-weight: bold;
+}
+
+.back-link::before {
+	content: '<';
+	margin-right: .2rem;
+}
+
 footer {
 	width: 100%;
 	padding: 1rem;
@@ -157,7 +168,6 @@ All Releases
 #release-thumbnails {
 	display: grid;
 	gap: 1rem;
-	margin-top: 1rem;
 }
 
 #release-thumbnails article {
@@ -165,7 +175,36 @@ All Releases
 	padding: 1rem;
 }
 
+/*
+__________________
+Create a Release
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+*/
 
+#create-release section {
+	display: grid;
+	padding: 1rem 0;
+}
+
+#create-release h3 {
+	margin-bottom: 1rem;
+}
+
+#create-release label {
+	margin-bottom: .2rem;
+}
+
+#create-release input {
+	margin-bottom: 1rem;
+}
+
+#create-release textarea {
+	height: 10rem;
+}
+
+#create-release ul {
+	margin-bottom: 1rem;
+}
 
 
 

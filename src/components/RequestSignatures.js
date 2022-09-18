@@ -72,7 +72,7 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 
 	return (
 		<>
-			<Link to={`/release/${releaseId}`}>Cancel signature request</Link>
+			<Link to={`/release/${releaseId}`} className="back-link">Cancel signature request</Link>
 			<h2>Request New Signature(s)</h2>
 			<form>
 				<section>
