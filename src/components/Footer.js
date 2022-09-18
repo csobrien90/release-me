@@ -1,9 +1,10 @@
 import React from 'react';
 
 const Footer = () => {
+	const now = new Date();
 	return (
 		<footer>
-			this a foot
+			&copy; Copyright {now.getFullYear()} - Chad O'Brien
 		</footer>
 	)
 }

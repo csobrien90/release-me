@@ -43,32 +43,34 @@ body {
 
 main {
 	padding: 1rem;
-	display: grid;
+	align-items: flex-start;
+	position: relative;
+	min-height: 100vh;
 }
 
 h1 {
-	font-size: 10em;
-}
-
-h2 {
 	font-size: 6em;
 }
 
-h3 {
+h2 {
 	font-size: 4em;
 }
 
-h4 {
+h3 {
 	font-size: 3em;
 }
 
-p {
+h4 {
 	font-size: 2em;
+}
+
+p {
+	font-size: 1.6em;
 }
 
 label {
 	display: block;
-	font-size: 2em;
+	font-size: 1.6em;
 }
 
 ul {
@@ -112,26 +114,56 @@ Shared styles
 	width: fit-content;
 	padding: .5rem 0;
 }
+
 #logout button {
 	position: absolute;
 	width: 100%;
-	top: 1rem;
+	top: 0;
 	left: 0;
 	transition: all .2s;
 	z-index: -1;
+	opacity: 0;
 }
+
 #logout button.isExpanded {
 	top: 3rem;
 	z-index: 0;
+	opacity: 1;
 }
 
+footer {
+	width: 100%;
+	padding: 1rem;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+}
 
 /*
 __________________
-Section Name
+All Releases
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 */
 
+#all-releases {
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 1rem;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#release-thumbnails {
+	display: grid;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+#release-thumbnails article {
+	display: grid;
+	padding: 1rem;
+}
 
 
 

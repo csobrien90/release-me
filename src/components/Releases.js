@@ -49,15 +49,19 @@ const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 
 	return (
 		<>
-			<h2>All Releases</h2>
-			<Link to={'/create'}><button>Create New Release</button></Link>
-			{data && Object.keys(data).map(releaseId => {
-				return (
-					<Link key={releaseId} to={`/release/${releaseId}`}>
-						<ReleaseThumbnail data={data[releaseId]} />
-					</Link>
-				)
-			})}
+			<header id='all-releases'>
+				<h2>All Releases</h2>
+				<Link to={'/create'}><button>Create New Release</button></Link>
+			</header>
+			<section id='release-thumbnails'>
+				{data && Object.keys(data).map(releaseId => {
+					return (
+						<Link key={releaseId} to={`/release/${releaseId}`}>
+							<ReleaseThumbnail data={data[releaseId]} />
+						</Link>
+					)
+				})}
+			</section>
 		</>
 	)
 }
