@@ -73,7 +73,7 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 	return (
 		<>
 			<Link to={`/release/${releaseId}`} className="back-link">Cancel signature request</Link>
-			<h2>Request New Signature(s)</h2>
+			<h2>Request Signature(s)</h2>
 			<form id='request-new-signature'>
 				<section>
 					<h3>General Info</h3>
@@ -108,7 +108,7 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 					})}
 					<button onClick={(e) => addSigner(e)}>Add Signer</button>
 				</section>
-				<button onClick={(e) => {e.preventDefault(); requestSignature()}}>Create Release</button>
+				<button onClick={(e) => {e.preventDefault(); requestSignature()}}>Make Request</button>
 			</form>
 		</>
 	)

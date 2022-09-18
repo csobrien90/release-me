@@ -7,17 +7,13 @@ Imports and Variables
 @import url('https://fonts.googleapis.com/css2?family=Antic&display=swap');
 
 :root {
-	--black: #2b1a22;
-	--white: #efdbc4;
-	--tan: #bc946b;
-	--red-orange: #f05741;
-	--blue: #0089b8;
-	--yellow: #ddaf4a;
-	--boxBackground: rgba(255, 255, 255, .2);
+	--lt-green: #D1FED8;
+	--green: #94ED99;
+	--dk-green: #2FDB4B;
 
-	--hvy-shadow: 0 0 5px rgba(0, 0, 0, .8);
-	--shadow: 0 0 5px rgba(0, 0, 0, .5);
-	--lt-shadow: 0 0 4px rgba(0, 0, 0, .3);
+	--hvy-shadow: 0 0 5px rgba(0, 0, 0, .7);
+	--shadow: 0 0 5px rgba(0, 0, 0, .4);
+	--lt-shadow: 0 0 4px rgba(0, 0, 0, .2);
 	--highlight: 0 0 5px var(--boxBackground);
 }
 
@@ -39,6 +35,7 @@ html {
 
 body {
 	font-size: 10px;
+	background-color: var(--lt-green);
 }
 
 main {
@@ -54,7 +51,7 @@ h1 {
 }
 
 h2 {
-	font-size: 4em;
+	font-size: 3.8em;
 }
 
 h3 {
@@ -71,7 +68,12 @@ dt {
 	margin-bottom: .2rem;
 }
 
-p, li, dd {
+a {
+	color: black;
+	text-decoration: none;
+}
+
+p, li, dd, input, textarea {
 	font-size: 1.6em;
 }
 
@@ -81,7 +83,26 @@ dd {
 
 label {
 	display: block;
+	font-size: 1.8em;
+}
+
+input, textarea {
+	background-color: rgba(255,255,255,.7);
+	padding: .5rem .3rem;
+}
+
+button {
+	background-color: var(--dk-green);
 	font-size: 1.6em;
+	padding: .4rem;
+	border-radius: .5rem;
+	box-shadow: var(--lt-shadow);
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+button:hover {
+	box-shadow: var(--shadow);
 }
 
 .sr-only {
@@ -112,7 +133,7 @@ Shared styles
 
 #logout-wrapper {
 	display: grid;
-	background-color: white;
+	background-color: var(--lt-green);
 }
 
 #logout {
@@ -178,11 +199,15 @@ All Releases
 #release-thumbnails {
 	display: grid;
 	gap: 1rem;
+	margin-top: 2rem;
 }
 
 #release-thumbnails article {
 	display: grid;
 	padding: 1rem;
+	background-color: var(--green);
+	border: 1px solid black;
+	box-shadow: var(--lt-shadow);
 }
 
 .metadata {
@@ -229,6 +254,8 @@ Single Release
 #release-header {
 	display: grid;
 	grid-template-columns: auto auto;
+	align-items: center;
+	gap: 1rem;
 	margin-bottom: 3rem;
 }
 
@@ -244,9 +271,14 @@ Single Release
 	margin-bottom: .5rem;
 }
 
+#release-general-info ul {
+	list-style-type: none;
+	padding: 0;
+}
+
 #release-signatures {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: auto auto;
 	gap: 1rem;
 	align-items: center;
 	justify-content: space-between;
@@ -262,7 +294,9 @@ Single Release
 	gap: 1rem;
 	padding: 1rem;
 	grid-column: span 2;
+	background-color: var(--green);
 	border: 1px solid black;
+	box-shadow: var(--lt-shadow);
 }
 
 #release-signatures article ul {
