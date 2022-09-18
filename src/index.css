@@ -73,7 +73,7 @@ a {
 	text-decoration: none;
 }
 
-p, li, dd, input, textarea {
+p, li, dd, input, textarea, footer {
 	font-size: 1.6em;
 }
 
@@ -91,7 +91,7 @@ input, textarea {
 	padding: .5rem .3rem;
 }
 
-button {
+button, input[type="submit"] {
 	background-color: var(--dk-green);
 	font-size: 1.6em;
 	padding: .4rem;
@@ -99,9 +99,10 @@ button {
 	box-shadow: var(--lt-shadow);
 	border: 1px solid black;
 	font-weight: bold;
+	cursor: pointer;
 }
 
-button:hover {
+button:hover, input[type="submit"]:hover {
 	box-shadow: var(--shadow);
 }
 
@@ -136,6 +137,14 @@ Shared styles
 	background-color: var(--lt-green);
 }
 
+#logout-wrapper p {
+	cursor: pointer;
+}
+
+#logout-wrapper p:hover {
+	font-weight: bold;
+}
+
 #logout {
 	justify-self: flex-end;
 	position: relative;
@@ -162,6 +171,7 @@ Shared styles
 .back-link {
 	font-size: .9rem;
 	text-decoration: none;
+	width: fit-content;
 }
 
 .back-link:hover, .back-link:focus {
@@ -180,6 +190,34 @@ footer {
 	bottom: 0;
 	left: 0;
 	text-align: center;
+}
+
+#create-release, #request-new-signature {
+	max-width: 600px;
+}
+
+/*
+__________________
+Login
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+*/
+
+#login-wrapper {
+	display: grid;
+	min-height: 50vw;
+	width: 100%;
+	align-content: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+#login-wrapper form {
+	display: grid;
+	gap: 1rem;
+}
+
+#login {
+	margin-top: 1rem;
 }
 
 /*
@@ -208,6 +246,14 @@ All Releases
 	background-color: var(--green);
 	border: 1px solid black;
 	box-shadow: var(--lt-shadow);
+}
+
+#release-thumbnails article:hover {
+	box-shadow: var(--shadow);
+}
+
+#release-thumbnails article:hover h3 {
+	text-decoration: underline;
 }
 
 .metadata {

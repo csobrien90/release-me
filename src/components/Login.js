@@ -26,7 +26,7 @@ const Login = ( {setIsLoggedIn, setUserName} ) => {
 	}	
 
 	return (
-		<>
+		<div id='login-wrapper'>
 			<h2>Login</h2>
 			<form onSubmit={(e) => handleLoginAttempt(e)}>
 				<label htmlFor='userid'>
@@ -39,7 +39,7 @@ const Login = ( {setIsLoggedIn, setUserName} ) => {
 				</label>
 				<input type='submit' id='login' name='login' value='Login' />
 			</form>
-		</>
+		</div>
 	)
 }
 
