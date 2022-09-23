@@ -13,7 +13,6 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 		let hasValidEmail = signerInfo.hasOwnProperty('emailAddress') && /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(signerInfo.emailAddress);
 		let hasValidName = signerInfo.hasOwnProperty('name') && /^[a-zA-Z0-9.' ]{1,}$/.test(signerInfo.name);
 		let isValid = isObject && hasTwoProps && hasValidEmail && hasValidName;
-		console.log(signerInfo, 'is ', JSON.stringify(isValid))
 		return isValid;
 	}
 
@@ -64,7 +63,9 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 			.then(res => {
 				if (res.status !== 200) return;
 				sessionStorage.removeItem("releases");
-				nav(`/release/${releaseId}`);
+				// TODO: update release data and use below commented nav to go back to release page
+				// nav(`/release/${releaseId}`);
+				nav('/');
 			});
 	}
 

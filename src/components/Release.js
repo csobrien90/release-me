@@ -5,6 +5,37 @@ import SignatureRequestThumbnail from './SignatureRequestThumbnail';
 const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 	const { releaseId } = useParams();
 	const [data, setData] = useState(null);
+	const [signatures, setSignatures] = useState(null);
+
+	const sortSignatures = (data) => {
+		const signatures = {
+			pending: [],
+			signed: []
+		};
+	
+		data.forEach(requested => {
+			requested.signatures.forEach(sig => {
+				// Add request metadata to individual signatures
+				sig.createdAt = requested.createdAt;
+				sig.subject = requested.subject;
+				sig.message = requested.message;
+
+				// Sort by signing status
+				switch(sig.statusCode) {
+					case "awaiting_signature":
+						signatures.pending.push(sig);
+						break;
+					case "signed":
+						signatures.signed.push(sig);
+						break;
+					default:
+						return;
+				}
+			})
+		})
+
+		return signatures;
+	}
 
 	useEffect(() => {
 
@@ -12,6 +43,8 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 		
 		if (releaseData) { 
 			setData(releaseData[releaseId]);
+			let signatures = sortSignatures(releaseData[releaseId].requestedSignatures);
+			setSignatures(signatures);
 			return;
 		} else {
 
@@ -30,6 +63,8 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 				.then(res => res.json())
 				.then(res => {
 					setData(res.Item.releases[releaseId]);
+					let signatures = sortSignatures(res.Item.releases[releaseId].requestedSignatures);
+					setSignatures(signatures);
 				});
 		}
 
@@ -93,14 +128,21 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 			<section id='release-signatures'>
 				<h3>Signatures</h3>
 				<Link to={`/request-signatures/${releaseId}`}><button>Request New Signature(s)</button></Link>
-				{
-					data && data.requestedSignatures.length > 0 ? data.requestedSignatures.map((request, index) => {
+				<dl>
+					{signatures && signatures.pending.length > 0 && <dt>Pending ({signatures && signatures.pending.length})</dt>}
+					{signatures && signatures.pending.length > 0 && signatures.pending.map((sig, index) => {
 						return (
-							<SignatureRequestThumbnail key={index} data={request} convertTimestamp={convertTimestamp} />
-						);
-					}) : <p id='no-signatures'>No signatures requested yet.</p>
-
-				}
+							<SignatureRequestThumbnail key={index} data={sig} convertTimestamp={convertTimestamp} />
+						)
+					})}
+					{signatures && signatures.signed.length > 0 && <dt>Signed ({signatures && signatures.signed.length})</dt>}
+					{signatures && signatures.signed.length > 0 && signatures.signed.map((sig, index) => {
+						return (
+							<SignatureRequestThumbnail key={index} data={sig} convertTimestamp={convertTimestamp} />
+						)
+					})}
+				</dl>
+				{(!signatures || (signatures.pending.length === 0 && signatures.signed.length === 0)) ? <p id='no-signatures'>No signatures requested yet.</p> : ''}
 			</section>
 		</>
 	)
