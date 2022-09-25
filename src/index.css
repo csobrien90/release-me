@@ -145,7 +145,7 @@ Shared styles
 	color: white;
 	font-size: 3em;
 }
-
+ 
 #logout-wrapper {
 	display: grid;
 	background-color: var(--lt-green);
@@ -166,20 +166,25 @@ Shared styles
 	padding: .5rem 0;
 }
 
-#logout button {
+#gravatar-button-wrapper {
+	display: grid;
+	gap: .4em;
+	max-height: 0;
+	overflow: hidden;
 	position: absolute;
 	width: 100%;
-	top: 0;
-	left: 0;
 	transition: all .2s;
-	z-index: -1;
-	opacity: 0;
+	background-color: var(--lt-green);
+	padding: 0 .4em;
+	font-size: .8em;
 }
 
-#logout button.isExpanded {
-	top: 3rem;
-	z-index: 0;
-	opacity: 1;
+#gravatar-button-wrapper.isExpanded {
+	max-height: 200px;
+	border: 1px solid black;
+	border-top: none;
+	margin-top: .5em;
+	padding: .4em;
 }
 
 .back-link {
