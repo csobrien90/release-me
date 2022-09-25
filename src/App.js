@@ -7,12 +7,14 @@ import Releases from './components/Releases';
 import CreateRelease from './components/CreateRelease';
 import RequestSignatures from './components/RequestSignatures';
 import Footer from './components/Footer';
+import Loading from './components/Loading';
 
 const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [token, setToken] = useState(null);
 	const [userName, setUserName] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const checkToken = () => {
 		const response = {success: false};
@@ -107,22 +109,23 @@ const App = () => {
 
 	return (
 		<>
-			{isLoggedIn && <GravatarLogin userName={userName} />}
+			{isLoggedIn && <GravatarLogin userName={userName} setIsLoading={setIsLoading} />}
+			<Loading isVisible={isLoading} />
 			<Router>
 				<Routes>
 					<Route exact path="/" element={
 						isLoggedIn ? 
-							<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} /> : 
-							<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} setUserName={setUserName} />
+							<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} setIsLoading={setIsLoading} /> : 
+							<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} setUserName={setUserName} setIsLoading={setIsLoading} />
 					} />
 					<Route path="release/:releaseId" element={
-						<Release callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} />
+						<Release callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} setIsLoading={setIsLoading} />
 					} />
 					<Route path="create" element={
-						<CreateRelease callApi={callApi} />
+						<CreateRelease callApi={callApi} setIsLoading={setIsLoading} />
 					} />
 					<Route path="request-signatures/:releaseId" element={
-						<RequestSignatures callApi={callApi} checkReleaseData={checkReleaseData} />
+						<RequestSignatures callApi={callApi} checkReleaseData={checkReleaseData} setIsLoading={setIsLoading} />
 					} />
 				</Routes>
 			</Router>

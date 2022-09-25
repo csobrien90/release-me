@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SignatureRequestThumbnail = ( {data, convertTimestamp} ) => {
-	console.log(data)
 	return (
 		<article>
 			<header>

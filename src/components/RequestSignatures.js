@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'
 
-const RequestSignatures = ({ callApi, checkReleaseData }) => {
+const RequestSignatures = ({ callApi, checkReleaseData, setIsLoading }) => {
 	const {releaseId} = useParams();
 	const [subject, setSubject] = useState('');
 	const [message, setMessage] = useState('');
@@ -37,6 +37,7 @@ const RequestSignatures = ({ callApi, checkReleaseData }) => {
 	}
 	
 	const requestSignature = () => {
+
 		let access = getAccessToken();
 		if ( !access ) return;
 

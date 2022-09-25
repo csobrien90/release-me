@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const GravatarLogin = ({ userName }) => {
+const GravatarLogin = ({ userName, setIsLoading }) => {
 	const [isLogoutExpanded, setIsLogoutExpanded] = useState('');
 	
 	const toggleMenu = () => {
@@ -17,11 +17,17 @@ const GravatarLogin = ({ userName }) => {
 		window.location.href = '/';
 	}
 
+	const refresh = () => {
+		sessionStorage.removeItem("releases");
+		window.location.href = '/';
+	}
+
 	return (
 		<header id='logout-wrapper'>
 			<p id='logout' onClick={() => toggleMenu()}>
 				Welcome, {userName}
 				<button onClick={() => logout()} className={isLogoutExpanded}>Logout</button>
+				<button onClick={() => refresh()} className={isLogoutExpanded}>Refresh</button>
 			</p>
 		</header>
 	)

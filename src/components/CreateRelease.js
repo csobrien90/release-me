@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
-const CreateRelease = ({ callApi }) => {
+const CreateRelease = ({ callApi, setIsLoading }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [senderName, setSenderName] = useState('');
@@ -21,6 +21,7 @@ const CreateRelease = ({ callApi }) => {
 	}
 
 	const createRelease = () => {
+		
 		let access = getAccessToken();
 		if ( !access ) return;
 

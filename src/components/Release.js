@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import SignatureRequestThumbnail from './SignatureRequestThumbnail';
 
-const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
+const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) => {
 	const { releaseId } = useParams();
 	const [data, setData] = useState(null);
 	const [signatures, setSignatures] = useState(null);
@@ -47,7 +47,6 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 			setSignatures(signatures);
 			return;
 		} else {
-
 			let access = getAccessToken();
 			if ( !access ) return;
 
@@ -84,6 +83,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp }) => {
 	}
 
 	const deleteRelease = () => {
+
 		let access = getAccessToken();
 		if ( !access ) return;
 

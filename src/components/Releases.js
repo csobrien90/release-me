@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import ReleaseThumbnail from './ReleaseThumbnail';
 
-const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
+const Releases = ( {userId, token, callApi, checkReleaseData, setIsLoading} ) => {
 	const [data, setData] = useState(null);
 
 	const getAccessToken = () => {
@@ -26,6 +26,8 @@ const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 			setData(releaseData);
 			return;
 		} else {
+			setIsLoading(true);
+
 			let access = getAccessToken();
 			if ( !access ) return;
 
@@ -42,6 +44,7 @@ const Releases = ( {userId, token, callApi, checkReleaseData} ) => {
 				.then(res => {
 					sessionStorage.setItem('releases', JSON.stringify(res.Item.releases));
 					setData(res.Item.releases);
+					setIsLoading(false);
 				});
 		}
 
