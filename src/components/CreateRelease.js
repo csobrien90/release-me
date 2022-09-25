@@ -21,7 +21,8 @@ const CreateRelease = ({ callApi, setIsLoading }) => {
 	}
 
 	const createRelease = () => {
-		
+		setIsLoading(true);
+
 		let access = getAccessToken();
 		if ( !access ) return;
 
@@ -45,8 +46,20 @@ const CreateRelease = ({ callApi, setIsLoading }) => {
 			.then(res => {
 				if (res.status !== 200) return;
 				sessionStorage.removeItem("releases");
-				nav('/');
-			});
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Release created successfully!'
+				setTimeout(() => {
+					nav('/');
+				}, 2000);
+			})
+			.catch(error => {
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Unable to create release. Error: ' + error.message;
+				setTimeout(() => {
+					document.querySelector('#release-notification').style.display = 'none';
+				}, 2000);
+			})
+			
 	}
 
 	const nav = useNavigate();
@@ -79,6 +92,7 @@ const CreateRelease = ({ callApi, setIsLoading }) => {
 				</section>
 				<button onClick={(e) => {e.preventDefault(); createRelease()}}>Create Release</button>
 			</form>
+			<dialog id='release-notification'>Release created successfully!</dialog>
 		</>
 	)
 }

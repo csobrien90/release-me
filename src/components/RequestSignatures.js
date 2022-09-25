@@ -41,6 +41,8 @@ const RequestSignatures = ({ callApi, checkReleaseData, setIsLoading }) => {
 		let access = getAccessToken();
 		if ( !access ) return;
 
+		setIsLoading(true);
+
 		const releases = checkReleaseData();
 		const tempSigners = [...signers];
 		const requestSigners = tempSigners.filter(validateSignerInfo);
@@ -62,12 +64,23 @@ const RequestSignatures = ({ callApi, checkReleaseData, setIsLoading }) => {
 
 		callApi(params)
 			.then(res => {
+				setIsLoading(false);
 				if (res.status !== 200) return;
 				sessionStorage.removeItem("releases");
-				// TODO: update release data and use below commented nav to go back to release page
-				// nav(`/release/${releaseId}`);
-				nav('/');
-			});
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Signature(s) requested!'
+				setTimeout(() => {
+					nav('/');
+				}, 2000);
+			})
+			.catch(error => {
+				setIsLoading(false);
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Unable to request signature(s). Error: ' + error.message;
+				setTimeout(() => {
+					document.querySelector('#release-notification').style.display = 'none';
+				}, 2000);
+			})
 	}
 
 	const nav = useNavigate();
@@ -112,6 +125,7 @@ const RequestSignatures = ({ callApi, checkReleaseData, setIsLoading }) => {
 				</section>
 				<button onClick={(e) => {e.preventDefault(); requestSignature()}}>Make Request</button>
 			</form>
+			<dialog id='release-notification'></dialog>
 		</>
 	)
 }

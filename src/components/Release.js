@@ -90,6 +90,8 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 			return;
 		}
 
+		setIsLoading(true);
+
 		let access = getAccessToken();
 		if ( !access ) return;
 
@@ -106,10 +108,23 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 
 		callApi(params)
 			.then(res => {
+				setIsLoading(false);
 				if (res.status !== 200) return;
 				sessionStorage.removeItem("releases");
-				nav('/');
-			});
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Release deleted successfully!'
+				setTimeout(() => {
+					nav('/');
+				}, 2000);
+			})
+			.catch(error => {
+				setIsLoading(false);
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Unable to delete release. Error: ' + error.message;
+				setTimeout(() => {
+					document.querySelector('#release-notification').style.display = 'none';
+				}, 2000);
+			})
 	}
 
 	const nav = useNavigate();
@@ -155,6 +170,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 				</dl>
 				{(!signatures || (signatures.pending.length === 0 && signatures.signed.length === 0)) ? <p id='no-signatures'>No signatures requested yet.</p> : ''}
 			</section>
+			<dialog id='release-notification'></dialog>
 		</>
 	)
 }
