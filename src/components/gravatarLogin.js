@@ -26,10 +26,10 @@ const GravatarLogin = ({ userName, setIsLoading }) => {
 		<header id='logout-wrapper'>
 			<p id='logout' onClick={() => toggleMenu()}>
 				Welcome, {userName}
-				<div id='gravatar-button-wrapper' className={isLogoutExpanded}>
+				<span id='gravatar-button-wrapper' className={isLogoutExpanded}>
 					<button onClick={() => logout()}>Logout</button>
 					<button onClick={() => refresh()}>Refresh</button>
-				</div>
+				</span>
 			</p>
 		</header>
 	)

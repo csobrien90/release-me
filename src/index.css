@@ -378,6 +378,10 @@ Single Release
 	grid-column: span 2;
 }
 
+.btn-delete:hover {
+	text-decoration: underline;
+}
+
 /*
 __________________
 Request Signatures

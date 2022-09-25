@@ -6,6 +6,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 	const { releaseId } = useParams();
 	const [data, setData] = useState(null);
 	const [signatures, setSignatures] = useState(null);
+	const [isConfirmed, setisConfirmed] = useState(false);
 
 	const sortSignatures = (data) => {
 		const signatures = {
@@ -84,6 +85,11 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 
 	const deleteRelease = () => {
 
+		if (!isConfirmed) {
+			setisConfirmed(true);
+			return;
+		}
+
 		let access = getAccessToken();
 		if ( !access ) return;
 
@@ -107,13 +113,18 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 	}
 
 	const nav = useNavigate();
+	window.addEventListener('click', (e) => {
+		if (e.target.className !== 'btn-delete') {
+			setisConfirmed(false);
+		};
+	});
 
 	return (
 		<>
 			<header id='release-header'>
 				<Link to={'/'} className="back-link">Back to All Releases</Link>
 				<h2>{data && data.title}</h2>
-				<button className='btn-delete' onClick={deleteRelease}>Delete Release</button>
+				<button className='btn-delete' onClick={deleteRelease} style={isConfirmed ? {backgroundColor: 'salmon'} : {backgroundColor: 'var(--dk-green)'}}>{isConfirmed ? 'Are you sure?' : 'Delete Release'}</button>
 				<p className='metadata'>Created: {data && convertTimestamp(data.created)} <br></br>Last Modified: {data && convertTimestamp(data.modified)}</p>
 			</header>
 			<section id='release-general-info'>
