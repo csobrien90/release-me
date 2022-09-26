@@ -84,6 +84,36 @@ const App = () => {
 		return parsedData;
 	}
 
+	const sortSignatures = (data) => {
+		const signatures = {
+			pending: [],
+			signed: []
+		};
+	
+		data.forEach(requested => {
+			requested.signatures.forEach(sig => {
+				// Add request metadata to individual signatures
+				sig.createdAt = requested.createdAt;
+				sig.subject = requested.subject;
+				sig.message = requested.message;
+
+				// Sort by signing status
+				switch(sig.statusCode) {
+					case "awaiting_signature":
+						signatures.pending.push(sig);
+						break;
+					case "signed":
+						signatures.signed.push(sig);
+						break;
+					default:
+						return;
+				}
+			})
+		})
+
+		return signatures;
+	}
+
 	const callApi = async (params) => {
 		const apiEndpoint = 'https://824oc9yvf6.execute-api.us-east-2.amazonaws.com/prod/releaseme';
 		
@@ -115,11 +145,11 @@ const App = () => {
 				<Routes>
 					<Route exact path="/" element={
 						isLoggedIn ? 
-							<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} setIsLoading={setIsLoading} /> : 
+							<Releases userId={userId} token={token} callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} setIsLoading={setIsLoading} sortSignatures={sortSignatures} /> : 
 							<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setToken={setToken} setUserName={setUserName} setIsLoading={setIsLoading} />
 					} />
 					<Route path="release/:releaseId" element={
-						<Release callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} setIsLoading={setIsLoading} />
+						<Release callApi={callApi} checkReleaseData={checkReleaseData} convertTimestamp={convertTimestamp} setIsLoading={setIsLoading}  sortSignatures={sortSignatures} />
 					} />
 					<Route path="create" element={
 						<CreateRelease callApi={callApi} setIsLoading={setIsLoading} />

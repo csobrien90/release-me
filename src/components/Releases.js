@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import ReleaseThumbnail from './ReleaseThumbnail';
 
-const Releases = ( {userId, token, callApi, checkReleaseData, setIsLoading} ) => {
+const Releases = ( {userId, token, callApi, checkReleaseData, setIsLoading, sortSignatures, convertTimestamp} ) => {
 	const [data, setData] = useState(null);
 
 	const getAccessToken = () => {
@@ -38,7 +38,7 @@ const Releases = ( {userId, token, callApi, checkReleaseData, setIsLoading} ) =>
 					"token": access.token
 				}
 			}
-	
+
 			callApi(params)
 				.then(res => res.json())
 				.then(res => {
@@ -60,7 +60,7 @@ const Releases = ( {userId, token, callApi, checkReleaseData, setIsLoading} ) =>
 				{data && Object.keys(data).map(releaseId => {
 					return (
 						<Link key={releaseId} to={`/release/${releaseId}`}>
-							<ReleaseThumbnail data={data[releaseId]} />
+							<ReleaseThumbnail data={data[releaseId]} sortSignatures={sortSignatures} convertTimestamp={convertTimestamp} />
 						</Link>
 					)
 				})}

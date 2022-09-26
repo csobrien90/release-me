@@ -2,41 +2,11 @@ import React, {useEffect, useState} from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import SignatureRequestThumbnail from './SignatureRequestThumbnail';
 
-const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) => {
+const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading, sortSignatures }) => {
 	const { releaseId } = useParams();
 	const [data, setData] = useState(null);
 	const [signatures, setSignatures] = useState(null);
 	const [isConfirmed, setisConfirmed] = useState(false);
-
-	const sortSignatures = (data) => {
-		const signatures = {
-			pending: [],
-			signed: []
-		};
-	
-		data.forEach(requested => {
-			requested.signatures.forEach(sig => {
-				// Add request metadata to individual signatures
-				sig.createdAt = requested.createdAt;
-				sig.subject = requested.subject;
-				sig.message = requested.message;
-
-				// Sort by signing status
-				switch(sig.statusCode) {
-					case "awaiting_signature":
-						signatures.pending.push(sig);
-						break;
-					case "signed":
-						signatures.signed.push(sig);
-						break;
-					default:
-						return;
-				}
-			})
-		})
-
-		return signatures;
-	}
 
 	useEffect(() => {
 
@@ -128,6 +98,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 	}
 
 	const nav = useNavigate();
+	
 	window.addEventListener('click', (e) => {
 		if (e.target.className !== 'btn-delete') {
 			setisConfirmed(false);
@@ -158,13 +129,13 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading }) 
 					{signatures && signatures.pending.length > 0 && <dt>Pending ({signatures && signatures.pending.length})</dt>}
 					{signatures && signatures.pending.length > 0 && signatures.pending.map((sig, index) => {
 						return (
-							<SignatureRequestThumbnail key={index} data={sig} convertTimestamp={convertTimestamp} />
+							<SignatureRequestThumbnail key={index} data={sig} convertTimestamp={convertTimestamp} callApi={callApi} setIsLoading={setIsLoading} />
 						)
 					})}
 					{signatures && signatures.signed.length > 0 && <dt>Signed ({signatures && signatures.signed.length})</dt>}
 					{signatures && signatures.signed.length > 0 && signatures.signed.map((sig, index) => {
 						return (
-							<SignatureRequestThumbnail key={index} data={sig} convertTimestamp={convertTimestamp} />
+							<SignatureRequestThumbnail key={index} data={sig} convertTimestamp={convertTimestamp} callApi={callApi} setIsLoading={setIsLoading} />
 						)
 					})}
 				</dl>

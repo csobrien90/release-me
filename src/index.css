@@ -265,6 +265,13 @@ All Releases
 	background-color: var(--green);
 	border: 1px solid black;
 	box-shadow: var(--lt-shadow);
+	height: 40em;
+	max-width: 50em;
+	width: 90%;
+	gap: 2em;
+	grid-template-rows: auto 1fr auto;
+	grid-template-columns: auto auto;
+	justify-content: space-between;
 }
 
 #release-thumbnails article:hover {
@@ -275,9 +282,49 @@ All Releases
 	text-decoration: underline;
 }
 
+#release-thumbnails article .release-thumbnails-dates {
+	display: grid;
+	justify-items: flex-end;
+	align-content: flex-start;
+	gap: .5em;
+}
+
+#release-thumbnails article .release-thumbnails-dates p {
+	font-size: 1.2em;
+}
+
+#release-thumbnails article .release-thumbnails-dates span {
+	display: block;
+}
+
+#release-thumbnails article .release-thumbnail-description {
+	grid-column: span 2;
+	overflow: auto;
+}
+
+#release-thumbnails article dl {
+	grid-column: span 2;
+}
+
+#release-thumbnails article dd {
+	display: inline-block;
+	padding: .5em;
+	width: fit-content;
+	margin: 0;
+	border-left: 1px solid black;
+}
+
+#release-thumbnails article dd:first-of-type {
+	margin: 0;
+	padding-left: 0;
+	border: none;
+}
+
 .metadata {
 	font-size: .8rem;
 }
+
+
 
 /*
 __________________
@@ -461,7 +508,9 @@ Media queries
 }
 
 @media screen and (min-width: 768px) {
-
+	#release-thumbnails article .release-thumbnails-dates span {
+		display: inline-block;
+	}
 }
   
 @media screen and (min-width: 1040px) {
