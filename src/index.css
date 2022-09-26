@@ -224,7 +224,7 @@ Login
 
 #login-wrapper {
 	display: grid;
-	min-height: 50vw;
+	height: calc(100vh - 8em);
 	width: 100%;
 	align-content: center;
 	justify-content: center;
@@ -238,6 +238,10 @@ Login
 
 #login {
 	margin-top: 1rem;
+}
+
+#login-notification {
+	transition: all .3s;
 }
 
 /*
@@ -256,8 +260,9 @@ All Releases
 
 #release-thumbnails {
 	display: grid;
-	gap: 1rem;
+	gap: 2rem;
 	margin-top: 2rem;
+	justify-content: center;
 }
 
 #release-thumbnails article {
@@ -268,10 +273,8 @@ All Releases
 	box-shadow: var(--lt-shadow);
 	height: 40em;
 	max-width: 50em;
-	width: 90%;
-	gap: 2em;
+	gap: 3em;
 	grid-template-rows: auto 1fr auto;
-	grid-template-columns: auto auto;
 	justify-content: space-between;
 }
 
@@ -285,7 +288,7 @@ All Releases
 
 #release-thumbnails article .release-thumbnails-dates {
 	display: grid;
-	justify-items: flex-end;
+	justify-items: flex-start;
 	align-content: flex-start;
 	gap: .5em;
 }
@@ -299,12 +302,7 @@ All Releases
 }
 
 #release-thumbnails article .release-thumbnail-description {
-	grid-column: span 2;
 	overflow: auto;
-}
-
-#release-thumbnails article dl {
-	grid-column: span 2;
 }
 
 #release-thumbnails article dd {
@@ -384,7 +382,7 @@ Single Release
 	display: grid;
 	grid-template-columns: auto auto;
 	align-items: center;
-	gap: 1rem;
+	gap: .5rem 2em;
 	margin-bottom: 3rem;
 }
 
@@ -416,10 +414,15 @@ Single Release
 
 #release-signatures dl {
 	grid-column: span 2;
+	display: grid;
+	width: 100%;
+	gap: 2em;
 }
 
 #release-signatures dt {
 	font-weight: bold;
+	grid-column: 1 / -1;
+	margin-top: 1em;
 }
 
 #release-signatures h3 {
@@ -430,7 +433,6 @@ Single Release
 	display: grid;
 	gap: 1rem;
 	padding: 1rem;
-	margin: 1em 0 2em;
 	grid-column: span 2;
 	background-color: var(--green);
 	border: 1px solid black;
@@ -512,8 +514,37 @@ Media queries
 }
 
 @media screen and (min-width: 768px) {
+	#all-releases {
+		justify-content: start;
+	}
+
+	#release-thumbnails {
+		grid-template-columns: repeat(auto-fit, minmax(40em, 1fr));
+		justify-content: space-between;
+	}
+
 	#release-thumbnails article .release-thumbnails-dates span {
 		display: inline-block;
+	}
+
+	#release-thumbnails {
+		grid-template-columns: repeat(auto-fit, minmax(40em, 1fr));
+		justify-content: space-between;
+		padding: 0 2em;
+	}
+
+	#release-header {
+		grid-template-columns: auto 1fr;
+		justify-items: start;
+	}
+
+	#release-signatures {
+		grid-template-columns: auto 1fr;
+		justify-items: start;
+	}
+
+	#release-signatures dl {
+		grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
 	}
 }
   

@@ -15,9 +15,22 @@ const Login = ( {setIsLoggedIn, setUserName, setIsLoading} ) => {
 
 		// Get reCaptcha code
 		// Call Lambda to validate login information 
-
 		// If successful login, save token and log user in
-		let userName = `Chad O'Brien`;
+
+		// Temporary automatic login functionality for development and testing
+		if (userId !== 'test_user' || password !== 'demoPassword123') {
+			let note = document.querySelector('#login-notification');
+			note.style.maxHeight = '100px';
+			note.style.opacity = 1;
+			note.innerText = 'Incorrect credentials - please try again.';
+			setTimeout(() => {
+				note.style.opacity = 0;
+				note.style.maxHeight = '0';
+			}, 2000);
+			return;
+		}
+
+		let userName = 'Test User';
 		setUserName(userName);
 		saveToken(12345, 1, userName);
 		setIsLoggedIn(true);
@@ -39,6 +52,7 @@ const Login = ( {setIsLoggedIn, setUserName, setIsLoading} ) => {
 				</label>
 				<input type='submit' id='login' name='login' value='Login' />
 			</form>
+			<p id='login-notification'></p>
 		</div>
 	)
 }

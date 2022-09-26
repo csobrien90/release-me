@@ -5,14 +5,16 @@ const ReleaseThumbnail = ( {data, sortSignatures, convertTimestamp} ) => {
 
 	return (
 		<article>
-			<h3>{data.title}</h3>
-			<div className='release-thumbnails-dates'>
-				<p>Created: 
-					<span>{convertTimestamp(data.created)}</span>
-				</p>
-				<p>Last modified: 
-					<span>{convertTimestamp(data.modified)}</span>
-				</p>
+			<div>
+				<h3>{data.title}</h3>
+				<div className='release-thumbnails-dates'>
+					<p>Created: 
+						<span>{convertTimestamp(data.created)}</span>
+					</p>
+					<p>Last modified: 
+						<span>{convertTimestamp(data.modified)}</span>
+					</p>
+				</div>
 			</div>
 			<p className='release-thumbnail-description'>{data.description}</p>
 			<dl>
