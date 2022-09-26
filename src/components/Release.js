@@ -66,7 +66,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading, so
 			setisConfirmed(false);
 			setTimeout(() => {
 				document.querySelector('#release-notification').style.display = 'none';
-			}, 3000);
+			}, 4000);
 			return;
 		}
 
