@@ -101,6 +101,32 @@ const SignatureRequestThumbnail = ( {data, convertTimestamp, callApi, setIsLoadi
 			})
 	}
 
+	const getSignatureFile = () => {
+
+		setIsLoading(true);
+
+		let access = getAccessToken();
+		if ( !access ) return;
+
+		const params = {
+			"action": 'getSignatureFile',
+			"auth": {
+				"userId": access.userId,
+				"token": access.token
+			},
+			"params": {
+				"requestId": data.id,
+			}
+		}
+
+		callApi(params)
+			.then(res => res.json())
+			.then(res => {
+				setIsLoading(false);
+				window.open(res.fileUrl);
+			})
+	}
+
 	const nav = useNavigate();
 
 	window.addEventListener('click', (e) => {
@@ -125,6 +151,12 @@ const SignatureRequestThumbnail = ( {data, convertTimestamp, callApi, setIsLoadi
 				<div className='signature-button-wrapper'>
 					<button onClick={resendRequest}>Resend request</button>
 					<button onClick={deleteSignature} className='btn-delete' style={isConfirmed ? {backgroundColor: 'salmon'} : {backgroundColor: 'var(--dk-green)'}}>{isConfirmed ? 'Are you sure?' : 'Delete Request'}</button>
+				</div>
+			}
+			{
+				data.signedAt && 
+				<div className='signature-button-wrapper'>
+					<button onClick={getSignatureFile}>Download signed form</button>
 				</div>
 			}
 		</article>
