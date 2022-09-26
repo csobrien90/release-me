@@ -60,6 +60,16 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading, so
 			return;
 		}
 
+		if (signatures.signed.length > 0) {
+			document.querySelector('#release-notification').style.display = 'grid';
+			document.querySelector('#release-notification').innerText = 'Cannot delete releases with completed signatures. If you wish to delete pending signatures, you may do so one by one.';
+			setisConfirmed(false);
+			setTimeout(() => {
+				document.querySelector('#release-notification').style.display = 'none';
+			}, 3000);
+			return;
+		}
+
 		setIsLoading(true);
 
 		let access = getAccessToken();
@@ -98,7 +108,7 @@ const Release = ({ callApi, checkReleaseData, convertTimestamp, setIsLoading, so
 	}
 
 	const nav = useNavigate();
-	
+
 	window.addEventListener('click', (e) => {
 		if (e.target.className !== 'btn-delete') {
 			setisConfirmed(false);

@@ -96,6 +96,7 @@ const App = () => {
 				sig.createdAt = requested.createdAt;
 				sig.subject = requested.subject;
 				sig.message = requested.message;
+				sig.id = requested.signatureRequestId;
 
 				// Sort by signing status
 				switch(sig.statusCode) {

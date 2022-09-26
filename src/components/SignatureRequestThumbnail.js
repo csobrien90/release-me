@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom'
 
 const SignatureRequestThumbnail = ( {data, convertTimestamp, callApi, setIsLoading} ) => {
 	const [isConfirmed, setisConfirmed] = useState(false);
@@ -28,36 +29,36 @@ const SignatureRequestThumbnail = ( {data, convertTimestamp, callApi, setIsLoadi
 		let access = getAccessToken();
 		if ( !access ) return;
 
-		// const params = {
-		// 	"action": "deleteRelease",
-		// 	"auth": {
-		// 		"userId": access.userId,
-		// 		"token": access.token
-		// 	},
-		// 	"params": {
-		// 		"releaseId": releaseId
-		// 	}
-		// }
+		const params = {
+			"action": "deleteRequest",
+			"auth": {
+				"userId": access.userId,
+				"token": access.token
+			},
+			"params": {
+				"requestId": data.id
+			}
+		}
 
-		// callApi(params)
-		// 	.then(res => {
-		// 		setIsLoading(false);
-		// 		if (res.status !== 200) return;
-		// 		sessionStorage.removeItem("releases");
-		// 		document.querySelector('#release-notification').style.display = 'grid';
-		// 		document.querySelector('#release-notification').innerText = 'Release deleted successfully!'
-		// 		setTimeout(() => {
-		// 			nav('/');
-		// 		}, 2000);
-		// 	})
-		// 	.catch(error => {
-		// 		setIsLoading(false);
-		// 		document.querySelector('#release-notification').style.display = 'grid';
-		// 		document.querySelector('#release-notification').innerText = 'Unable to delete release. Error: ' + error.message;
-		// 		setTimeout(() => {
-		// 			document.querySelector('#release-notification').style.display = 'none';
-		// 		}, 2000);
-		// 	})
+		callApi(params)
+			.then(res => {
+				setIsLoading(false);
+				if (res.status !== 200) return;
+				sessionStorage.removeItem("releases");
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Request deleted successfully!'
+				setTimeout(() => {
+					nav('/');
+				}, 2000);
+			})
+			.catch(error => {
+				setIsLoading(false);
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Unable to delete request. Error: ' + error.message;
+				setTimeout(() => {
+					document.querySelector('#release-notification').style.display = 'none';
+				}, 2000);
+			})
 	}
 
 	const resendRequest = () => {
@@ -100,6 +101,8 @@ const SignatureRequestThumbnail = ( {data, convertTimestamp, callApi, setIsLoadi
 		// 		}, 2000);
 		// 	})
 	}
+
+	const nav = useNavigate();
 
 	window.addEventListener('click', (e) => {
 		if (e.target.className !== 'btn-delete') {
