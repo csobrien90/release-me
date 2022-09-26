@@ -103,6 +103,7 @@ button, input[type="submit"] {
 
 button:hover, input[type="submit"]:hover {
 	box-shadow: var(--shadow);
+	text-decoration: underline;
 }
 
 .sr-only {
@@ -450,8 +451,11 @@ Single Release
 	grid-column: span 2;
 }
 
-.btn-delete:hover {
-	text-decoration: underline;
+.signature-button-wrapper {
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 2em;
+	justify-content: start;
 }
 
 

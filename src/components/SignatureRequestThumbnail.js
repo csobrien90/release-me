@@ -68,38 +68,37 @@ const SignatureRequestThumbnail = ( {data, convertTimestamp, callApi, setIsLoadi
 		let access = getAccessToken();
 		if ( !access ) return;
 
-		console.log('resend!!');
+		const params = {
+			"action": 'sendReminder',
+			"auth": {
+				"userId": access.userId,
+				"token": access.token
+			},
+			"params": {
+				"requestId": data.id,
+				"emailAddress": data.signerEmailAddress
+			}
+		}
 
-		// const params = {
-		// 	"action": "deleteRelease",
-		// 	"auth": {
-		// 		"userId": access.userId,
-		// 		"token": access.token
-		// 	},
-		// 	"params": {
-		// 		"releaseId": releaseId
-		// 	}
-		// }
-
-		// callApi(params)
-		// 	.then(res => {
-		// 		setIsLoading(false);
-		// 		if (res.status !== 200) return;
-		// 		sessionStorage.removeItem("releases");
-		// 		document.querySelector('#release-notification').style.display = 'grid';
-		// 		document.querySelector('#release-notification').innerText = 'Release deleted successfully!'
-		// 		setTimeout(() => {
-		// 			nav('/');
-		// 		}, 2000);
-		// 	})
-		// 	.catch(error => {
-		// 		setIsLoading(false);
-		// 		document.querySelector('#release-notification').style.display = 'grid';
-		// 		document.querySelector('#release-notification').innerText = 'Unable to delete release. Error: ' + error.message;
-		// 		setTimeout(() => {
-		// 			document.querySelector('#release-notification').style.display = 'none';
-		// 		}, 2000);
-		// 	})
+		callApi(params)
+			.then(res => {
+				setIsLoading(false);
+				if (res.status !== 200) return;
+				sessionStorage.removeItem("releases");
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Reminder sent!'
+				setTimeout(() => {
+					document.querySelector('#release-notification').style.display = 'none';
+				}, 2000);
+			})
+			.catch(error => {
+				setIsLoading(false);
+				document.querySelector('#release-notification').style.display = 'grid';
+				document.querySelector('#release-notification').innerText = 'Unable to send reminder. Error: ' + error.message;
+				setTimeout(() => {
+					document.querySelector('#release-notification').style.display = 'none';
+				}, 2000);
+			})
 	}
 
 	const nav = useNavigate();

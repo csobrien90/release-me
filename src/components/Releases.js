@@ -57,6 +57,7 @@ const Releases = ( {userId, token, callApi, checkReleaseData, setIsLoading, sort
 				<Link to={'/create'}><button>Create New Release</button></Link>
 			</header>
 			<section id='release-thumbnails'>
+				{(data && Object.keys(data).length === 0) && <p>No releases found - click the <strong>Create New Release</strong> button to get started!</p>}
 				{data && Object.keys(data).map(releaseId => {
 					return (
 						<Link key={releaseId} to={`/release/${releaseId}`}>

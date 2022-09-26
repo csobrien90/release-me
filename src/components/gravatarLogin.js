@@ -22,6 +22,12 @@ const GravatarLogin = ({ userName, setIsLoading }) => {
 		window.location.href = '/';
 	}
 
+	window.addEventListener('click', (e) => {
+		if (e.target.id !== 'logout') {
+			setIsLogoutExpanded('');
+		};
+	});
+
 	return (
 		<header id='logout-wrapper'>
 			<p id='logout' onClick={() => toggleMenu()}>
